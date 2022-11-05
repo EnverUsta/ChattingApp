@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'The Chatting App';
-  users: any;
+  users: any[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -17,9 +17,10 @@ export class AppComponent implements OnInit {
   }
 
   getUsers() {
-    this.http.get('https://localhost:5001/api/users').subscribe({
-      next: (response: any)  => {
-        this.users = response;
+    this.http.get<any[]>('https://localhost:5001/api/users').subscribe({
+      next: (response: any[])  => {
+        if (response)
+           this.users = response;
       },
       error: (error: any) => {
         console.log(error);

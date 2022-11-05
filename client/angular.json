@@ -23,6 +23,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -67,6 +68,9 @@
               "browserTarget": "client:build:production"
             },
             "development": {
+              "sslKey": "./ssl/server.key",
+              "sslCert": "./ssl/server.crt",
+              "ssl": true,
               "browserTarget": "client:build:development"
             }
           },
