@@ -12,18 +12,32 @@
         <a class="nav-link" href="#">Messages</a>
       </li>
     </ul>
-    <form class="d-flex" role="search">
+    <form
+      #loginForm="ngForm"
+      (ngSubmit)="login()"
+      autocomplete="off"
+      class="d-flex"
+      role="search"
+    >
       <input
         class="form-control me-2"
         type="text"
+        id="username"
+        name="username"
         placeholder="Username"
         aria-label="Search"
+        [(ngModel)]="user.username"
+        required
       />
       <input
         class="form-control me-2"
         type="password"
+        id="password"
+        name="password"
         placeholder="Password"
         aria-label="Search"
+        [(ngModel)]="user.password"
+        required
       />
       <button class="btn btn-outline-success" type="submit">Login</button>
     </form>
