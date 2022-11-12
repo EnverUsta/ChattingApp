@@ -9,3 +9,29 @@ Implement the basic API functionality and have an introductory understanding of:
 4. The API Project structure
 5. Configuration and Environment variables
 6. Source Control
+
+## Section 3
+
+Complete the walking skeleton and have an introductory understanding of:
+
+1. Using the Angular CLI
+2. How to create a new Angular app
+3. The Angular project files
+4. The Angular bootstrap process
+5. Using the Angular HTTP Client Service
+6. Running an Angular app over HTTPS
+7. How to add packages using NPM
+
+## Section 4
+
+Implement the basic authentication in our app and have an understanding of:
+
+1. How to store passwords in the Database
+2. Using inheritance in C# - DRY (Don't Repeat Yourself)
+3. Using the C# debugger
+4. Using Data Transfer Objects (DTOs)
+5. Validation
+6. JSON Web Tokens (JWTs)
+7. Using services in C#
+8. Middleware
+9. Extension Methods - DRY (Don't Repeat Yourself)
