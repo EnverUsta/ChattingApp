@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserDto } from '../models/User/userDto.interface';
 import { AccountService } from '../services/account.service';
@@ -16,12 +17,12 @@ export class NavComponent {
     password: '',
   };
 
-  constructor(private accoutService: AccountService) {}
+  constructor(private accoutService: AccountService, private router: Router) {}
 
   login() {
     this.accoutService.login(this.user).subscribe({
       next: (user: UserDto) => {
-        console.log('response: ', user);
+        this.router.navigateByUrl('/members');
       },
       error: (error) => {
         console.log('error: ', error);
@@ -31,5 +32,6 @@ export class NavComponent {
 
   logout() {
     this.accoutService.logout();
+    this.router.navigateByUrl('/');
   }
 }
