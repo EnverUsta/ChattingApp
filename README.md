@@ -1,4 +1,5 @@
 # ChattingApp
+
 ## Section 2
 
 Implement the basic API functionality and have an introductory understanding of:
@@ -35,3 +36,15 @@ Implement the basic authentication in our app and have an understanding of:
 7. Using services in C#
 8. Middleware
 9. Extension Methods - DRY (Don't Repeat Yourself)
+
+## Section 5
+
+Implement the login and register functionality into the apps as well as understanding:
+
+1. Creating components using the Angular CLI
+2. Using Angular Template forms
+3. Using Angular services
+4. Understanding Observables
+5. Using Angular structural directives to conditionally display elements on a page
+6. Component communication from parent to child
+7. Component communication from child to parent
