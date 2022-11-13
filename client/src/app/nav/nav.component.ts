@@ -1,7 +1,8 @@
-import { LoginDto } from './../models/User/loginDto.interface';
 import { Component } from '@angular/core';
-import { AccountService } from '../services/account.service';
+import { Observable } from 'rxjs';
 import { UserDto } from '../models/User/userDto.interface';
+import { AccountService } from '../services/account.service';
+import { LoginDto } from './../models/User/loginDto.interface';
 
 @Component({
   selector: 'app-nav',
@@ -9,7 +10,7 @@ import { UserDto } from '../models/User/userDto.interface';
   styleUrls: ['./nav.component.css'],
 })
 export class NavComponent {
-  loggedIn: boolean = false;
+  currentUser$: Observable<UserDto | null> = this.accoutService.currentUser$;
   user: LoginDto = {
     username: '',
     password: '',
@@ -21,7 +22,6 @@ export class NavComponent {
     this.accoutService.login(this.user).subscribe({
       next: (user: UserDto) => {
         console.log('response: ', user);
-        this.loggedIn = true;
       },
       error: (error) => {
         console.log('error: ', error);
@@ -30,6 +30,6 @@ export class NavComponent {
   }
 
   logout() {
-    this.loggedIn = false;
+    this.accoutService.logout();
   }
 }
