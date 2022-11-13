@@ -1,5 +1,7 @@
+import { LoginDto } from './../models/User/loginDto.interface';
 import { Component } from '@angular/core';
-import { AppUser } from 'src/app/models/user.interface';
+import { AccountService } from '../services/account.service';
+import { UserDto } from '../models/User/userDto.interface';
 
 @Component({
   selector: 'app-nav',
@@ -7,14 +9,27 @@ import { AppUser } from 'src/app/models/user.interface';
   styleUrls: ['./nav.component.css'],
 })
 export class NavComponent {
-  user: AppUser = {
+  loggedIn: boolean = false;
+  user: LoginDto = {
     username: '',
     password: '',
   };
 
-  constructor() {}
+  constructor(private accoutService: AccountService) {}
 
   login() {
-    console.log('user: ', this.user);
+    this.accoutService.login(this.user).subscribe({
+      next: (user: UserDto) => {
+        console.log('response: ', user);
+        this.loggedIn = true;
+      },
+      error: (error) => {
+        console.log('error: ', error);
+      },
+    });
+  }
+
+  logout() {
+    this.loggedIn = false;
   }
 }
