@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { RegisterDto } from '../models/User/registerDto.interface';
 import { LoginDto } from './../models/User/loginDto.interface';
 import { UserDto } from './../models/User/userDto.interface';
 
@@ -25,6 +26,20 @@ export class AccountService {
         return user;
       })
     );
+  }
+
+  register(user: RegisterDto): Observable<UserDto> {
+    return this.http
+      .post<UserDto>(this.baseUrl + 'account/register', user)
+      .pipe(
+        map((user: UserDto) => {
+          if (user) {
+            localStorage.setItem('user', JSON.stringify(user));
+            this.currentUserSource.next(user);
+          }
+          return user;
+        })
+      );
   }
 
   setCurrentUser(user: UserDto): void {
