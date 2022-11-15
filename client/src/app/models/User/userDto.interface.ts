@@ -1,4 +1,4 @@
 export interface UserDto {
-  userName: string;
+  username: string;
   token: string;
 }
