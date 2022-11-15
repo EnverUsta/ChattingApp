@@ -48,3 +48,13 @@ Implement the login and register functionality into the apps as well as understa
 5. Using Angular structural directives to conditionally display elements on a page
 6. Component communication from parent to child
 7. Component communication from child to parent
+
+
+## Section 6
+
+Implement routing in our Angular app and have an understanding of:
+
+1. Angular routing
+2. Adding a bootstrap theme
+3. Using Angular route guards
+4. Using a Shared Module 
