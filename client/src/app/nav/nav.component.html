@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
   <div class="container">
     <a class="navbar-brand" routerLink="/">Chatting App</a>
     <ng-container
@@ -24,7 +24,7 @@
 
       <div ngbDropdown class="d-inline-block">
         <button type="button" class="btn" ngbDropdownToggle>
-          Welcome User
+          Welcome {{ currentUser.username | titlecase }}
         </button>
         <div ngbDropdownMenu>
           <button ngbDropdownItem>Edit Profile</button>
@@ -63,7 +63,7 @@
         [(ngModel)]="user.password"
         required
       />
-      <button class="btn btn-outline-success" type="submit">Login</button>
+      <button class="btn btn-success" type="submit">Login</button>
     </form>
   </ng-template>
 </nav>
