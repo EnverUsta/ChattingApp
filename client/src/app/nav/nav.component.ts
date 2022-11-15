@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -17,7 +18,11 @@ export class NavComponent {
     password: '',
   };
 
-  constructor(private accoutService: AccountService, private router: Router) {}
+  constructor(
+    private accoutService: AccountService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   login() {
     this.accoutService.login(this.user).subscribe({
@@ -26,6 +31,7 @@ export class NavComponent {
       },
       error: (error) => {
         console.log('error: ', error);
+        this.toastr.error(error.error);
       },
     });
   }
