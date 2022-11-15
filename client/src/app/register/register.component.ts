@@ -2,6 +2,7 @@ import { UserDto } from './../models/User/userDto.interface';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RegisterDto } from '../models/User/registerDto.interface';
 import { AccountService } from '../services/account.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,7 @@ export class RegisterComponent {
     password: '',
   };
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private toastr: ToastrService) {}
 
   register(): void {
     this.accountService.register(this.user).subscribe({
@@ -25,6 +26,7 @@ export class RegisterComponent {
       },
       error: (error) => {
         console.log(error);
+        this.toastr.error(error.error);
       },
     });
   }
