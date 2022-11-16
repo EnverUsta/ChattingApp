@@ -49,7 +49,6 @@ Implement the login and register functionality into the apps as well as understa
 6. Component communication from parent to child
 7. Component communication from child to parent
 
-
 ## Section 6
 
 Implement routing in our Angular app and have an understanding of:
@@ -57,4 +56,13 @@ Implement routing in our Angular app and have an understanding of:
 1. Angular routing
 2. Adding a bootstrap theme
 3. Using Angular route guards
-4. Using a Shared Module 
+4. Using a Shared Module
+
+## Section 7
+
+Implement global error handling in both the API and the Angular application. Also to have an
+understanding of:
+
+1. API Middleware
+2. Angular Interceptors
+3. Troubleshooting exceptions
