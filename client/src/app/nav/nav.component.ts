@@ -29,10 +29,6 @@ export class NavComponent {
       next: (user: UserDto) => {
         this.router.navigateByUrl('/members');
       },
-      error: (error) => {
-        console.log('error: ', error);
-        this.toastr.error(error.error);
-      },
     });
   }
 
