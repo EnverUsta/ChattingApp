@@ -66,3 +66,13 @@ understanding of:
 1. API Middleware
 2. Angular Interceptors
 3. Troubleshooting exceptions
+
+## Section 8
+
+Implement further functionality into our API and gain an understanding of:
+
+1. Entity Framework Relationships
+2. Entity Framework Conventions
+3. Seeding Data into the Database
+4. The repository pattern
+5. Using AutoMapper
