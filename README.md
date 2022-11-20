@@ -76,3 +76,14 @@ Implement further functionality into our API and gain an understanding of:
 3. Seeding Data into the Database
 4. The repository pattern
 5. Using AutoMapper
+
+## Section 9
+
+Implement the components that make up the user interface in our client application
+and gain an understanding of:
+
+1. Using Typescript types
+2. Using the async pipe
+3. Using bootstrap for styling
+4. Basic css tricks to enhance the look
+5. Using a 3rd party photo gallery
