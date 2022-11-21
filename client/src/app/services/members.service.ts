@@ -20,7 +20,7 @@ export class MembersService {
   constructor(private http: HttpClient) {}
 
   getMembers(): Observable<Member[]> {
-    return this.http.get<Member[]>(this.baseUrl + 'us ers', httpOptions);
+    return this.http.get<Member[]>(this.baseUrl + 'users', httpOptions);
   }
 
   getMember(username: string): Observable<Member> {
