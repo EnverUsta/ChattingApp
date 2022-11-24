@@ -33,7 +33,7 @@
     </div>
   </div>
   <div class="col-8">
-    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs mb-3">
+    <ul ngbNav #nav="ngbNav" class="nav-tabs mb-3">
       <li [ngbNavItem]="1">
         <a ngbNavLink>About {{ member.username | titlecase }} </a>
         <ng-template ngbNavContent>
@@ -54,7 +54,11 @@
       <li [ngbNavItem]="3">
         <a ngbNavLink>Photos</a>
         <ng-template ngbNavContent>
-          <p>Photos will go here</p>
+          <ngx-gallery
+            [options]="galleryOptions"
+            [images]="galleryImages"
+            class="ngx-gallery"
+          ></ngx-gallery>
         </ng-template>
       </li>
       <li [ngbNavItem]="4">
