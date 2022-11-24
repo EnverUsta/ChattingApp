@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MemberDetailComponent implements OnInit {
   member: Member | undefined;
+  active = 1;
 
   constructor(
     private memberService: MembersService,
