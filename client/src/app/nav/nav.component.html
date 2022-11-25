@@ -27,7 +27,9 @@
           Welcome {{ currentUser.username | titlecase }}
         </button>
         <div ngbDropdownMenu>
-          <button ngbDropdownItem>Edit Profile</button>
+          <button ngbDropdownItem routerLink="/member/edit">
+            Edit Profile
+          </button>
           <button ngbDropdownItem (click)="logout()">Logout</button>
         </div>
       </div>
