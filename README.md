@@ -87,3 +87,15 @@ and gain an understanding of:
 3. Using bootstrap for styling
 4. Basic css tricks to enhance the look
 5. Using a 3rd party photo gallery
+
+## Section 10
+
+Implement persistence when updating resources in the API and gaining and
+understanding of:
+
+1. Angular Template forms
+2. The CanDeactivate Route Guard
+3. The @ViewChild decorator
+4. Persisting changes to the API
+5. Adding loading indicators to the client app
+6. Caching data in Angular services
