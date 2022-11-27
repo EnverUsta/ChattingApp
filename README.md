@@ -99,3 +99,14 @@ understanding of:
 4. Persisting changes to the API
 5. Adding loading indicators to the client app
 6. Caching data in Angular services
+
+## Section 11
+
+Implement photo upload functionality in the application and gain an understanding of the following:
+
+1. Photo storage options
+2. Adding related entities
+3. Using a 3rd party API
+4. Using the Debugger (again!)
+5. Updating and deleting resources
+6. What to return when creating resources in a REST based API
