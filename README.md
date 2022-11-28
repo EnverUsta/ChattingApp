@@ -104,7 +104,7 @@ understanding of:
 
 Implement photo upload functionality in the application and gain an understanding of the following:
 
-1. Photo storage options
+1. Photo storage options(we are going to use cloudinary)
 2. Adding related entities
 3. Using a 3rd party API
 4. Using the Debugger (again!)
