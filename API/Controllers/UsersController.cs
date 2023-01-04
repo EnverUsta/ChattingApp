@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
@@ -25,7 +24,9 @@ public class UsersController : BaseApiController
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
     {
-        return Ok(await _userRepository.GetMembersAsync());
+        var users = await _userRepository.GetMembersAsync();
+
+        return Ok(users);
         // return Ok(_mapper.Map<IEnumerable<MemberDto>>(users));
         // return await _context.Users.ToListAsync();
     }
@@ -75,7 +76,10 @@ public class UsersController : BaseApiController
 
         user.Photos.Add(photo);
 
-        if (await _userRepository.SaveAllAsync()) return _mapper.Map<PhotoDto>(photo);
+        if (await _userRepository.SaveAllAsync())
+        {
+            return CreatedAtAction(nameof(GetUser), new { username = user.UserName }, _mapper.Map<PhotoDto>(photo));
+        }
 
         return BadRequest("Problem adding photo");
     }
