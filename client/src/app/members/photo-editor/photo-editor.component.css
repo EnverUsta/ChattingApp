@@ -1,0 +1,7 @@
+.nv-file-over {
+  border: dotted 3px red;
+}
+
+imput[type="file"] {
+ color: transparent;
+}
