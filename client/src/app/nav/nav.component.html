@@ -23,7 +23,11 @@
       </ul>
 
       <div ngbDropdown class="d-inline-block">
-        <button type="button" class="btn" ngbDropdownToggle>
+        <img
+          src="{{ currentUser.photoUrl || './assets/user.png' }}"
+          alt="user photo"
+        />
+        <button type="button" class="btn ms-1" ngbDropdownToggle>
           Welcome {{ currentUser.username | titlecase }}
         </button>
         <div ngbDropdownMenu>
