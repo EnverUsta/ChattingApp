@@ -16,16 +16,17 @@ export class RegisterComponent {
     password: '',
   };
 
-  constructor(private accountService: AccountService, private toastr: ToastrService) {}
+  constructor(
+    private accountService: AccountService,
+    private toastr: ToastrService
+  ) {}
 
   register(): void {
     this.accountService.register(this.user).subscribe({
       next: (response: UserDto) => {
-        console.log(response);
         this.cancel();
       },
       error: (error) => {
-        console.log(error);
         this.toastr.error(error.error);
       },
     });

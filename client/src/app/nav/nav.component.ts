@@ -1,6 +1,6 @@
-import { ToastrService } from 'ngx-toastr';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { UserDto } from '../models/User/userDto.interface';
 import { AccountService } from '../services/account.service';
@@ -18,15 +18,11 @@ export class NavComponent {
     password: '',
   };
 
-  constructor(
-    private accoutService: AccountService,
-    private router: Router,
-    private toastr: ToastrService
-  ) {}
+  constructor(private accoutService: AccountService, private router: Router) {}
 
   login() {
     this.accoutService.login(this.user).subscribe({
-      next: (user: UserDto) => {
+      next: (_user: UserDto) => {
         this.router.navigateByUrl('/members');
       },
     });
