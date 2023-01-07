@@ -44,4 +44,10 @@ export class MembersService {
       {}
     );
   }
+
+  deletePhoto(photoId: number): Observable<void> {
+    return this.http.delete<void>(
+      this.baseUrl + 'users/delete-photo/' + photoId
+    );
+  }
 }
