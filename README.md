@@ -110,3 +110,13 @@ Implement photo upload functionality in the application and gain an understandin
 4. Using the Debugger (again!)
 5. Updating and deleting resources
 6. What to return when creating resources in a REST based API
+
+## Section 12
+
+Implement more advanced forms using Reactivce Forms in Angular and understand how to:
+
+1. Use Reactive Forms
+2. Use Angular Validation for inputs
+3. Implement custom validators
+4. Implement reusable form controls
+5. Working with Date inputs
