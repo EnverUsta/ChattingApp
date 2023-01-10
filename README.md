@@ -120,5 +120,3 @@ Implement more advanced forms using Reactivce Forms in Angular and understand ho
 3. Implement custom validators
 4. Implement reusable form controls
 5. Working with Date inputs
-
-test
