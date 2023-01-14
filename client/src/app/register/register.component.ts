@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { RegisterDto } from '../models/User/registerDto.interface';
+import { UserDto } from '../models/User/userDto.interface';
 import { AccountService } from '../services/account.service';
 
 @Component({
@@ -63,15 +64,18 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
-    console.log('registerForm value: ', this.registerForm?.value);
-    // this.accountService.register(this.user).subscribe({
-    //   next: (response: UserDto) => {
-    //     this.cancel();
-    //   },
-    //   error: (error) => {
-    //     this.toastr.error(error.error);
-    //   },
-    // });
+    this.user = {
+      username: this.registerForm.value.username,
+      password: this.registerForm.value.password,
+    };
+    this.accountService.register(this.user).subscribe({
+      next: (response: UserDto) => {
+        this.cancel();
+      },
+      error: (error) => {
+        this.toastr.error(error.error);
+      },
+    });
   }
 
   cancel(): void {

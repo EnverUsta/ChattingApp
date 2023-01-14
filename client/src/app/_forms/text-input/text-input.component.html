@@ -12,12 +12,12 @@
 
   <div class="invalid-feedback" *ngIf="control.errors?.['minlength']">
     {{ label }} must be at least
-    {{ control.errors?.['minLength'].requiredLength }} characters
+    {{ control.errors?.['minLength']?.requiredLength }} characters
   </div>
 
   <div class="invalid-feedback" *ngIf="control.errors?.['maxlength']">
     {{ label }} must be at most
-    {{ control.errors?.['maxlength'].requiredLength }} characters
+    {{ control.errors?.['maxlength']?.requiredLength }} characters
   </div>
 
   <div class="invalid-feedback" *ngIf="control.errors?.['notMatching']">
