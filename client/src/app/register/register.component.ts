@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   AbstractControl,
+  FormBuilder,
   FormControl,
   FormGroup,
   ValidationErrors,
@@ -9,6 +10,7 @@ import {
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { RegisterDto } from '../models/User/registerDto.interface';
+import { UserDto } from '../models/User/userDto.interface';
 import { AccountService } from '../services/account.service';
 
 @Component({
@@ -23,29 +25,37 @@ export class RegisterComponent implements OnInit {
     password: '',
   };
   registerForm: FormGroup = new FormGroup({});
+  maxDate: Date = new Date();
 
   constructor(
     private accountService: AccountService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.initializeForm();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
 
   initializeForm(): void {
-    this.registerForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(8),
-      ]),
-      confirmPassword: new FormControl('', [
-        Validators.required,
-        this.matchValues('password'),
-      ]),
+    this.registerForm = this.fb.group({
+      gender: ['male'],
+      username: ['', Validators.required],
+      knownAs: ['', Validators.required],
+      dateOfBirth: ['', Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
+      password: [
+        '',
+        [Validators.required, Validators.minLength(4), Validators.maxLength(8)],
+      ],
+      confirmPassword: [
+        '',
+        [Validators.required, this.matchValues('password')],
+      ],
     });
+
     this.registerForm.controls['password'].valueChanges.subscribe({
       next: () => {
         this.registerForm.controls['confirmPassword'].updateValueAndValidity();
@@ -63,7 +73,11 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
-    console.log('registerForm value: ', this.registerForm?.value);
+    console.log(this.registerForm.value);
+    // this.user = {
+    //   username: this.registerForm.value.username,
+    //   password: this.registerForm.value.password,
+    // };
     // this.accountService.register(this.user).subscribe({
     //   next: (response: UserDto) => {
     //     this.cancel();

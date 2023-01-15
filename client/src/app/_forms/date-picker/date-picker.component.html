@@ -1,0 +1,44 @@
+<div class="input-group my-2">
+  <!-- <input
+    type="text"
+    [class.is-invalid]="control.touched && control.invalid"
+    class="form-control"
+    [formControl]="control"
+    placeholder="{{ label }}"
+    bsDatepicker
+    [bsConfig]="bsConfig"
+    [maxDate]="maxDate"
+  /> -->
+  <!-- <ngb-datepicker
+    #dp
+    [formControl]="control"
+    (navigate)="onNavigate($event)"
+  ></ngb-datepicker> -->
+  <!-- <input
+    class="form-control mt-3"
+    [formControl]="control"
+    placeholder="dd/mm/yyyy"
+    ngbDatepicker
+    #d="ngbDatepicker"
+  />
+  <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"></button> -->
+
+  <input
+    class="form-control"
+    placeholder="yyyy-mm-dd"
+    [formControl]="control"
+    ngbDatepicker
+    #d="ngbDatepicker"
+    [maxDate]="ngBMaxDate!"
+  />
+  <button
+    class="btn btn-outline-secondary bi bi-calendar3"
+    (click)="d.toggle()"
+    type="button"
+  >
+    <span class="fa fa-calendar"></span>
+  </button>
+  <div *ngIf="control.errors?.['required']" class="invalid-feedback">
+    {{ label }} is required
+  </div>
+</div>
