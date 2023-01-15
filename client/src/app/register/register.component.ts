@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
     password: '',
   };
   registerForm: FormGroup = new FormGroup({});
+  maxDate: Date = new Date();
 
   constructor(
     private accountService: AccountService,
@@ -34,11 +35,17 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
 
   initializeForm(): void {
     this.registerForm = this.fb.group({
+      gender: ['male'],
       username: ['', Validators.required],
+      knownAs: ['', Validators.required],
+      dateOfBirth: ['', Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
       password: [
         '',
         [Validators.required, Validators.minLength(4), Validators.maxLength(8)],
@@ -48,6 +55,7 @@ export class RegisterComponent implements OnInit {
         [Validators.required, this.matchValues('password')],
       ],
     });
+
     this.registerForm.controls['password'].valueChanges.subscribe({
       next: () => {
         this.registerForm.controls['confirmPassword'].updateValueAndValidity();
@@ -65,18 +73,19 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
-    this.user = {
-      username: this.registerForm.value.username,
-      password: this.registerForm.value.password,
-    };
-    this.accountService.register(this.user).subscribe({
-      next: (response: UserDto) => {
-        this.cancel();
-      },
-      error: (error) => {
-        this.toastr.error(error.error);
-      },
-    });
+    console.log(this.registerForm.value);
+    // this.user = {
+    //   username: this.registerForm.value.username,
+    //   password: this.registerForm.value.password,
+    // };
+    // this.accountService.register(this.user).subscribe({
+    //   next: (response: UserDto) => {
+    //     this.cancel();
+    //   },
+    //   error: (error) => {
+    //     this.toastr.error(error.error);
+    //   },
+    // });
   }
 
   cancel(): void {
