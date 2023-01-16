@@ -1,3 +1,4 @@
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   AbstractControl,
@@ -12,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { RegisterDto } from '../models/User/registerDto.interface';
 import { UserDto } from '../models/User/userDto.interface';
 import { AccountService } from '../services/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -20,17 +22,15 @@ import { AccountService } from '../services/account.service';
 })
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter<boolean>();
-  user: RegisterDto = {
-    username: '',
-    password: '',
-  };
   registerForm: FormGroup = new FormGroup({});
   maxDate: Date = new Date();
+  validationErrors: string[] | undefined;
 
   constructor(
     private accountService: AccountService,
     private toastr: ToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -73,22 +73,30 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
-    console.log(this.registerForm.value);
-    // this.user = {
-    //   username: this.registerForm.value.username,
-    //   password: this.registerForm.value.password,
-    // };
-    // this.accountService.register(this.user).subscribe({
-    //   next: (response: UserDto) => {
-    //     this.cancel();
-    //   },
-    //   error: (error) => {
-    //     this.toastr.error(error.error);
-    //   },
-    // });
+    const dateOfBirth = this.registerForm.controls['dateOfBirth'].value;
+    const values = {
+      ...this.registerForm.value,
+      dateOfBirth: this.getDateOnly(dateOfBirth),
+    };
+
+    this.accountService.register(values).subscribe({
+      next: (_response: UserDto) => {
+        this.router.navigateByUrl('/members');
+      },
+      error: (error) => {
+        this.validationErrors = error;
+      },
+    });
   }
 
   cancel(): void {
     this.cancelRegister.emit(false);
+  }
+
+  getDateOnly(date: NgbDateStruct): string {
+    const monthStr = date.month < 10 ? `0${date.month}` : `${date.month}`;
+    const dayStr = date.day < 10 ? `0${date.day}` : `${date.day}`;
+
+    return `${date.year}-${monthStr}-${dayStr}`;
   }
 }
