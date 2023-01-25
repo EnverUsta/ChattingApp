@@ -120,3 +120,16 @@ Implement more advanced forms using Reactivce Forms in Angular and understand ho
 3. Implement custom validators
 4. Implement reusable form controls
 5. Working with Date inputs
+
+
+## Section 13
+
+Implement paging, sorting, filtering and gain an understanding of the following:
+
+1. How to implement pagination on the API & client
+2. Deferred Execution using IQueryable
+3. How to implement filtering on the API & client
+4. How to implement sorting on the API & client
+5. Using Action Filters
+6. Adding a TimeAgo pipe
+7. Implement caching in the client for paginated resources
