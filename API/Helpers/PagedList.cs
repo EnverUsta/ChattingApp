@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace API.Helpers
 {
     public class PagedList<T> : List<T>
@@ -15,5 +17,12 @@ namespace API.Helpers
         public int TotalPages { get; set; }
         public int PageSize { get; set; }
         public int TotalCount { get; set; }
+
+        public static async Task<PagedList<T>> CreateAsync(IQueryable<T> source, int pageNumber, int pageSize)
+        {
+            var count = await source.CountAsync();  // CountAsync() will execute the query in the database
+            var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(); // ToListAsync() will execute the query in the database
+            return new PagedList<T>(items, count, pageNumber, pageSize);
+        }
     }
 }
