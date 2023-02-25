@@ -5,7 +5,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FileUploadModule } from 'ng2-file-upload';
-import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbDatepickerModule,
+  NgbPaginationModule,
+} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [],
@@ -21,6 +24,7 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
     }),
     FileUploadModule,
     NgbDatepickerModule,
+    NgbPaginationModule,
   ],
   exports: [
     BrowserAnimationsModule,
@@ -28,6 +32,7 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
     NgxGalleryModule,
     NgxSpinnerModule,
     FileUploadModule,
+    NgbPaginationModule,
   ],
 })
 export class SharedModule {}

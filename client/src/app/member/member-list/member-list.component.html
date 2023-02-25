@@ -3,3 +3,19 @@
     <app-member-card [member]="member"></app-member-card>
   </div>
 </div>
+
+<div class="d-flex justify-content-center" *ngIf="pagination">
+  <ngb-pagination
+    [collectionSize]="pagination.totalItems"
+    [pageSize]="pagination.itemsPerPage"
+    aria-label="Custom pagination"
+    (pageChange)="onPageChanged($event)"
+    [maxSize]="10"
+    [page]="pagination.currentPage"
+    [boundaryLinks]="true"
+  >
+    <ng-template ngbPaginationPrevious>Prev</ng-template>
+    <ng-template ngbPaginationNext>Next</ng-template>
+    <!-- <ng-template ngbPaginationNumber let-p>{{ getPageSymbol(p) }}</ng-template> -->
+  </ngb-pagination>
+</div>
