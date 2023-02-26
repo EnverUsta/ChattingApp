@@ -1,8 +1,7 @@
-import { Observable } from 'rxjs';
-import { MembersService } from './../../services/members.service';
 import { Component, OnInit } from '@angular/core';
 import { Member } from 'src/app/models/member';
 import { Pagination } from 'src/app/models/pagination';
+import { MembersService } from './../../services/members.service';
 
 @Component({
   selector: 'app-member-list',
@@ -32,5 +31,9 @@ export class MemberListComponent implements OnInit {
         }
       },
     });
+  }
+
+  onPageChanged(pageNumber: number) {
+    this.loadMembers();
   }
 }
