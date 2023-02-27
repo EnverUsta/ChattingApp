@@ -7,6 +7,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
+
 public class UserRepository : IUserRepository
 {
     private readonly DataContext _context;
@@ -31,12 +32,24 @@ public class UserRepository : IUserRepository
         // return await _context.Users
         //     .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
         //     .ToListAsync();
-        var query = _context.Users.AsQueryable();
+        // var query = _context.Users.AsQueryable();
 
-        query = query.Where(u => u.UserName != userParams.CurrentUsername);
-        query = query.Where(u => u.Gender != userParams.Gender);
+        // query = query.Where(u => u.UserName != userParams.CurrentUsername).Where(u => u.Gender != userParams.Gender);
+        // query = query.Where(u => u.Gender != userParams.Gender);
+        // var query = _context.Users.Where(u => u.UserName != userParams.CurrentUsername);
 
-        return await PagedList<MemberDto>.CreateAsync(query.AsNoTracking().ProjectTo<MemberDto>(_mapper.ConfigurationProvider), userParams.PageNumber, userParams.PageSize);
+        var query = _context.Users
+            .AsQueryable()
+            .Where(user => user.UserName != userParams.CurrentUsername)
+            .Where(user => user.Gender != userParams.Gender)
+            .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking();
+
+        return await PagedList<MemberDto>.CreateAsync(
+            query,
+            userParams.PageNumber,
+            userParams.PageSize
+        );
     }
 
     public async Task<AppUser> GetUserByIdAsync(int id)
