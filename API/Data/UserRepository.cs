@@ -31,8 +31,12 @@ public class UserRepository : IUserRepository
         // return await _context.Users
         //     .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
         //     .ToListAsync();
-        var query = _context.Users.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsNoTracking();
-        return await PagedList<MemberDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+        var query = _context.Users.AsQueryable();
+
+        query = query.Where(u => u.UserName != userParams.CurrentUsername);
+        query = query.Where(u => u.Gender != userParams.Gender);
+
+        return await PagedList<MemberDto>.CreateAsync(query.AsNoTracking().ProjectTo<MemberDto>(_mapper.ConfigurationProvider), userParams.PageNumber, userParams.PageSize);
     }
 
     public async Task<AppUser> GetUserByIdAsync(int id)
