@@ -1,5 +1,6 @@
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
@@ -29,19 +30,21 @@ public class UserRepository : IUserRepository
 
     public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
     {
-        // return await _context.Users
-        //     .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-        //     .ToListAsync();
+        // * This is the original code from the course. ProjectTo and AsNoTracking are missing in this snippet
         // var query = _context.Users.AsQueryable();
-
-        // query = query.Where(u => u.UserName != userParams.CurrentUsername).Where(u => u.Gender != userParams.Gender);
-        // query = query.Where(u => u.Gender != userParams.Gender);
         // var query = _context.Users.Where(u => u.UserName != userParams.CurrentUsername);
+        // query = query.Where(u => u.Gender != userParams.Gender);
 
+        // const int userDateOfBirth = user.DateOfBirth.CalculateAge();
+
+        var minDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MaxAge - 1));
+        var maxDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MinAge));
+
+        // * This is the code from me
         var query = _context.Users
-            .AsQueryable()
-            .Where(user => user.UserName != userParams.CurrentUsername)
-            .Where(user => user.Gender != userParams.Gender)
+            .Where(u => u.UserName != userParams.CurrentUsername)
+            .Where(u => u.Gender != userParams.Gender)
+            .Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob)
             .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
             .AsNoTracking();
 
