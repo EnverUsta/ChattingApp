@@ -1,5 +1,6 @@
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
@@ -7,6 +8,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
+
 public class UserRepository : IUserRepository
 {
     private readonly DataContext _context;
@@ -28,15 +30,29 @@ public class UserRepository : IUserRepository
 
     public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
     {
-        // return await _context.Users
-        //     .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-        //     .ToListAsync();
-        var query = _context.Users.AsQueryable();
+        // * This is the original code from the course. ProjectTo and AsNoTracking are missing in this snippet
+        // var query = _context.Users.AsQueryable();
+        // var query = _context.Users.Where(u => u.UserName != userParams.CurrentUsername);
+        // query = query.Where(u => u.Gender != userParams.Gender);
 
-        query = query.Where(u => u.UserName != userParams.CurrentUsername);
-        query = query.Where(u => u.Gender != userParams.Gender);
+        // const int userDateOfBirth = user.DateOfBirth.CalculateAge();
 
-        return await PagedList<MemberDto>.CreateAsync(query.AsNoTracking().ProjectTo<MemberDto>(_mapper.ConfigurationProvider), userParams.PageNumber, userParams.PageSize);
+        var minDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MaxAge - 1));
+        var maxDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MinAge));
+
+        // * This is the code from me
+        var query = _context.Users
+            .Where(u => u.UserName != userParams.CurrentUsername)
+            .Where(u => u.Gender != userParams.Gender)
+            .Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob)
+            .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking();
+
+        return await PagedList<MemberDto>.CreateAsync(
+            query,
+            userParams.PageNumber,
+            userParams.PageSize
+        );
     }
 
     public async Task<AppUser> GetUserByIdAsync(int id)
