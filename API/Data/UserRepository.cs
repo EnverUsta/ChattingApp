@@ -43,7 +43,7 @@ public class UserRepository : IUserRepository
         // * This is the code from me
         var query = _context.Users
             .Where(u => u.UserName != userParams.CurrentUsername)
-            .Where(u => u.Gender != userParams.Gender)
+            .Where(u => u.Gender == userParams.Gender)
             .Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob)
             .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
             .AsNoTracking();
