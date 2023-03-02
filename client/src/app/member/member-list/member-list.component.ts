@@ -1,7 +1,11 @@
+import { AccountService } from './../../services/account.service';
+import { UserDto } from 'src/app/models/User/userDto.interface';
 import { Component, OnInit } from '@angular/core';
 import { Member } from 'src/app/models/member';
 import { Pagination } from 'src/app/models/pagination';
 import { MembersService } from './../../services/members.service';
+import { UserParams } from 'src/app/models/userParams.model';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-member-list',
@@ -12,17 +16,29 @@ export class MemberListComponent implements OnInit {
   // members$: Observable<Member[]> | undefined;
   members: Member[] | undefined = [];
   pagination: Pagination | undefined;
-  pageSize = 5;
+  userParams: UserParams | undefined;
+  user: UserDto | undefined;
 
-  constructor(private membersService: MembersService) {}
+  constructor(
+    private membersService: MembersService,
+    private accountService: AccountService
+  ) {
+    this.accountService.currentUser$.pipe(take(1)).subscribe({
+      next: (user) => {
+        if (!user) return;
+        this.userParams = new UserParams(user);
+        this.user = user;
+      },
+    });
+  }
 
   ngOnInit(): void {
-    // this.members$ = this.membersService.getMembers();
     this.loadMembers();
   }
 
-  loadMembers(pageNumber: number = 1) {
-    this.membersService.getMembers(pageNumber, this.pageSize).subscribe({
+  loadMembers() {
+    if (!this.userParams) return;
+    this.membersService.getMembers(this.userParams).subscribe({
       next: (response) => {
         if (response.result && response.pagination) {
           this.members = response.result;
@@ -33,10 +49,8 @@ export class MemberListComponent implements OnInit {
   }
 
   onPageChanged(pageNumber: number) {
-    console.log(
-      '🚀 ~ file: member-list.component.ts:37 ~ MemberListComponent ~ onPageChanged ~ pageNumber:',
-      pageNumber
-    );
-    this.loadMembers(pageNumber);
+    if (!this.userParams || this.userParams.pageNumber === pageNumber) return;
+    this.userParams.pageNumber = pageNumber;
+    this.loadMembers();
   }
 }

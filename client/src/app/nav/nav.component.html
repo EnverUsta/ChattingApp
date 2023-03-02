@@ -28,7 +28,7 @@
           alt="user photo"
         />
         <button type="button" class="btn ms-1" ngbDropdownToggle>
-          Welcome {{ currentUser.username | titlecase }}
+          Welcome {{ currentUser.knownAs }}
         </button>
         <div ngbDropdownMenu>
           <button ngbDropdownItem routerLink="/member/edit">
