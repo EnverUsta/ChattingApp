@@ -10,6 +10,7 @@ import {
   NgbDropdownModule,
   NgbPaginationModule,
 } from '@ng-bootstrap/ng-bootstrap';
+import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
   declarations: [],
@@ -26,6 +27,7 @@ import {
     FileUploadModule,
     NgbDatepickerModule,
     NgbPaginationModule,
+    TimeagoModule.forRoot(),
   ],
   exports: [
     BrowserAnimationsModule,
@@ -35,6 +37,7 @@ import {
     FileUploadModule,
     NgbPaginationModule,
     NgbDropdownModule,
+    TimeagoModule,
   ],
 })
 export class SharedModule {}
