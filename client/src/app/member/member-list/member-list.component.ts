@@ -55,6 +55,18 @@ export class MemberListComponent implements OnInit {
     });
   }
 
+  loadMembersOrderByNewest() {
+    if (!this.userParams) return;
+    this.userParams.orderBy = 'created';
+    this.loadMembers();
+  }
+
+  loadMembersOrderByLastActive() {
+    if (!this.userParams) return;
+    this.userParams.orderBy = 'lastActive';
+    this.loadMembers();
+  }
+
   resetFilters() {
     if (!this.user) return;
     this.userParams = new UserParams(this.user);
