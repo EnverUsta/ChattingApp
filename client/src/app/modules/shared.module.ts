@@ -7,6 +7,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { FileUploadModule } from 'ng2-file-upload';
 import {
   NgbDatepickerModule,
+  NgbDropdownModule,
   NgbPaginationModule,
 } from '@ng-bootstrap/ng-bootstrap';
 
@@ -33,6 +34,7 @@ import {
     NgxSpinnerModule,
     FileUploadModule,
     NgbPaginationModule,
+    NgbDropdownModule,
   ],
 })
 export class SharedModule {}

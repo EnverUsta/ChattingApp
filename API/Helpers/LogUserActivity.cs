@@ -10,7 +10,7 @@ public class LogUserActivity : IAsyncActionFilter
         ActionExecutingContext context,
         ActionExecutionDelegate next
     )
-    { 
+    {
         var resultContext = await next();
 
         // It's probably not necessary
