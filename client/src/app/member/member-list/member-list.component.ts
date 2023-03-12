@@ -1,11 +1,8 @@
-import { AccountService } from './../../services/account.service';
-import { UserDto } from 'src/app/models/User/userDto.interface';
 import { Component, OnInit } from '@angular/core';
 import { Member } from 'src/app/models/member';
 import { Pagination } from 'src/app/models/pagination';
-import { MembersService } from './../../services/members.service';
 import { UserParams } from 'src/app/models/userParams.model';
-import { take } from 'rxjs/operators';
+import { MembersService } from './../../services/members.service';
 
 @Component({
   selector: 'app-member-list',
@@ -17,7 +14,6 @@ export class MemberListComponent implements OnInit {
   members: Member[] | undefined = [];
   pagination: Pagination | undefined;
   userParams: UserParams | undefined;
-  user: UserDto | undefined;
   genderList = [
     { value: 'male', display: 'Males' },
     {
@@ -26,17 +22,8 @@ export class MemberListComponent implements OnInit {
     },
   ];
 
-  constructor(
-    private membersService: MembersService,
-    private accountService: AccountService
-  ) {
-    this.accountService.currentUser$.pipe(take(1)).subscribe({
-      next: (user) => {
-        if (!user) return;
-        this.userParams = new UserParams(user);
-        this.user = user;
-      },
-    });
+  constructor(private membersService: MembersService) {
+    this.userParams = this.membersService.getUserParams();
   }
 
   ngOnInit(): void {
@@ -44,15 +31,17 @@ export class MemberListComponent implements OnInit {
   }
 
   loadMembers() {
-    if (!this.userParams) return;
-    this.membersService.getMembers(this.userParams).subscribe({
-      next: (response) => {
-        if (response.result && response.pagination) {
-          this.members = response.result;
-          this.pagination = response.pagination;
-        }
-      },
-    });
+    if (this.userParams) {
+      this.membersService.setUserParams(this.userParams);
+      this.membersService.getMembers(this.userParams).subscribe({
+        next: (response) => {
+          if (response.result && response.pagination) {
+            this.members = response.result;
+            this.pagination = response.pagination;
+          }
+        },
+      });
+    }
   }
 
   loadMembersOrderByNewest() {
@@ -68,14 +57,14 @@ export class MemberListComponent implements OnInit {
   }
 
   resetFilters() {
-    if (!this.user) return;
-    this.userParams = new UserParams(this.user);
+    this.userParams = this.membersService.resetUserParams();
     this.loadMembers();
   }
 
   onPageChanged(pageNumber: number) {
     if (!this.userParams || this.userParams.pageNumber === pageNumber) return;
     this.userParams.pageNumber = pageNumber;
+    this.membersService.setUserParams(this.userParams);
     this.loadMembers();
   }
 }
