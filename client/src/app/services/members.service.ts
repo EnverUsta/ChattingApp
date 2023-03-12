@@ -13,7 +13,7 @@ import { PaginatedResult } from '../models/pagination';
 export class MembersService {
   baseUrl = environment.apiUrl;
   members: Member[] = [];
-  memberCache = new Map();
+  memberCache = new Map<string, PaginatedResult<Member[]>>();
 
   constructor(private http: HttpClient) {}
 
@@ -41,6 +41,43 @@ export class MembersService {
       tap((response) => {
         this.memberCache.set(Object.values(userParams).join('-'), response);
       })
+    );
+  }
+
+  getMember(username: string): Observable<Member> {
+    const member = [...this.memberCache.values()]
+      .reduce((arr: Member[], elem: PaginatedResult<Member[]>) => {
+        if (!elem.result) return arr;
+        return arr.concat(elem.result);
+      }, [])
+      .find((member: Member) => member.username === username);
+
+    if (member) {
+      return of(member);
+    }
+
+    return this.http.get<Member>(this.baseUrl + 'users/' + username);
+  }
+
+  updateMember(member: Member) {
+    return this.http.put(this.baseUrl + 'users', member).pipe(
+      tap(() => {
+        const index = this.members.indexOf(member);
+        this.members[index] = { ...this.members[index], ...member };
+      })
+    );
+  }
+
+  setMainPhoto(photoId: number): Observable<void> {
+    return this.http.put<void>(
+      this.baseUrl + 'users/set-main-photo/' + photoId,
+      {}
+    );
+  }
+
+  deletePhoto(photoId: number): Observable<void> {
+    return this.http.delete<void>(
+      this.baseUrl + 'users/delete-photo/' + photoId
     );
   }
 
@@ -73,33 +110,5 @@ export class MembersService {
     params = params.append('pageNumber', pageNumber);
     params = params.append('pageSize', pageSize);
     return params;
-  }
-
-  getMember(username: string): Observable<Member> {
-    const member = this.members.find((x) => x.username === username);
-    if (member) return of(member);
-    return this.http.get<Member>(this.baseUrl + 'users/' + username);
-  }
-
-  updateMember(member: Member) {
-    return this.http.put(this.baseUrl + 'users', member).pipe(
-      tap(() => {
-        const index = this.members.indexOf(member);
-        this.members[index] = { ...this.members[index], ...member };
-      })
-    );
-  }
-
-  setMainPhoto(photoId: number): Observable<void> {
-    return this.http.put<void>(
-      this.baseUrl + 'users/set-main-photo/' + photoId,
-      {}
-    );
-  }
-
-  deletePhoto(photoId: number): Observable<void> {
-    return this.http.delete<void>(
-      this.baseUrl + 'users/delete-photo/' + photoId
-    );
   }
 }
