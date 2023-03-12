@@ -1,11 +1,13 @@
+import { AccountService } from './account.service';
 import { UserParams } from './../models/userParams.model';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Member } from './../models/member';
 import { PaginatedResult } from '../models/pagination';
+import { UserDto } from '../models/User/userDto.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +15,36 @@ import { PaginatedResult } from '../models/pagination';
 export class MembersService {
   baseUrl = environment.apiUrl;
   members: Member[] = [];
-  memberCache = new Map();
+  memberCache = new Map<string, PaginatedResult<Member[]>>();
+  user: UserDto | undefined;
+  userParams: UserParams | undefined;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private accountService: AccountService
+  ) {
+    this.accountService.currentUser$.pipe(take(1)).subscribe({
+      next: (user) => {
+        if (!user) return;
+        this.userParams = new UserParams(user);
+        this.user = user;
+      },
+    });
+  }
+
+  getUserParams() {
+    return this.userParams;
+  }
+
+  setUserParams(params: UserParams) {
+    this.userParams = params;
+  }
+
+  resetUserParams() {
+    if (!this.user) return;
+    this.userParams = new UserParams(this.user);
+    return this.userParams;
+  }
 
   getMembers(userParams: UserParams) {
     const response = this.memberCache.get(Object.values(userParams).join('-'));
@@ -41,6 +70,43 @@ export class MembersService {
       tap((response) => {
         this.memberCache.set(Object.values(userParams).join('-'), response);
       })
+    );
+  }
+
+  getMember(username: string): Observable<Member> {
+    const member = [...this.memberCache.values()]
+      .reduce((arr: Member[], elem: PaginatedResult<Member[]>) => {
+        if (!elem.result) return arr;
+        return arr.concat(elem.result);
+      }, [])
+      .find((member: Member) => member.username === username);
+
+    if (member) {
+      return of(member);
+    }
+
+    return this.http.get<Member>(this.baseUrl + 'users/' + username);
+  }
+
+  updateMember(member: Member) {
+    return this.http.put(this.baseUrl + 'users', member).pipe(
+      tap(() => {
+        const index = this.members.indexOf(member);
+        this.members[index] = { ...this.members[index], ...member };
+      })
+    );
+  }
+
+  setMainPhoto(photoId: number): Observable<void> {
+    return this.http.put<void>(
+      this.baseUrl + 'users/set-main-photo/' + photoId,
+      {}
+    );
+  }
+
+  deletePhoto(photoId: number): Observable<void> {
+    return this.http.delete<void>(
+      this.baseUrl + 'users/delete-photo/' + photoId
     );
   }
 
@@ -73,33 +139,5 @@ export class MembersService {
     params = params.append('pageNumber', pageNumber);
     params = params.append('pageSize', pageSize);
     return params;
-  }
-
-  getMember(username: string): Observable<Member> {
-    const member = this.members.find((x) => x.username === username);
-    if (member) return of(member);
-    return this.http.get<Member>(this.baseUrl + 'users/' + username);
-  }
-
-  updateMember(member: Member) {
-    return this.http.put(this.baseUrl + 'users', member).pipe(
-      tap(() => {
-        const index = this.members.indexOf(member);
-        this.members[index] = { ...this.members[index], ...member };
-      })
-    );
-  }
-
-  setMainPhoto(photoId: number): Observable<void> {
-    return this.http.put<void>(
-      this.baseUrl + 'users/set-main-photo/' + photoId,
-      {}
-    );
-  }
-
-  deletePhoto(photoId: number): Observable<void> {
-    return this.http.delete<void>(
-      this.baseUrl + 'users/delete-photo/' + photoId
-    );
   }
 }
