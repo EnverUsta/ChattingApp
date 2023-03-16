@@ -133,3 +133,10 @@ Implement paging, sorting, filtering and gain an understanding of the following:
 5. Using Action Filters
 6. Adding a TimeAgo pipe
 7. Implement caching in the client for paginated resources
+
+## Section 14
+
+Implement the 'like user' functionality and gain an understanding of the following:
+
+1. Many to many relationships
+2. Configuring entities in the DbContext
