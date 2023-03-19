@@ -140,4 +140,3 @@ Implement the 'like user' functionality and gain an understanding of the followi
 
 1. Many to many relationships
 2. Configuring entities in the DbContext
-3.
