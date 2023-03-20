@@ -30,3 +30,18 @@
     </div>
   </div>
 </div>
+
+<div class="d-flex justify-content-center" *ngIf="pagination">
+  <ngb-pagination
+    [collectionSize]="pagination.totalItems"
+    [pageSize]="pagination.itemsPerPage"
+    aria-label="Custom pagination"
+    (pageChange)="onPageChanged($event)"
+    [maxSize]="10"
+    [boundaryLinks]="true"
+  >
+    <ng-template ngbPaginationPrevious>Prev</ng-template>
+    <ng-template ngbPaginationNext>Next</ng-template>
+    <!-- <ng-template ngbPaginationNumber let-p>{{ getPageSymbol(p) }}</ng-template> -->
+  </ngb-pagination>
+</div>
