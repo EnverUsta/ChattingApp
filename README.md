@@ -121,7 +121,6 @@ Implement more advanced forms using Reactivce Forms in Angular and understand ho
 4. Implement reusable form controls
 5. Working with Date inputs
 
-
 ## Section 13
 
 Implement paging, sorting, filtering and gain an understanding of the following:
@@ -140,3 +139,11 @@ Implement the 'like user' functionality and gain an understanding of the followi
 
 1. Many to many relationships
 2. Configuring entities in the DbContext
+
+## Section 15
+
+Implement the Messaging functionality and gain an understanding of the following:
+
+1. More many to many relationships
+2. Using query params in Angular
+3. Using Route resolvers in Angular
