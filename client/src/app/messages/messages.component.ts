@@ -11,17 +11,18 @@ import { MessageService } from '../services/message.service';
 export class MessagesComponent implements OnInit {
   messages?: Message[];
   pagination?: Pagination;
-  container = 'Inbox';
+  container = 'Unread';
   pageNumber = 1;
   pageSize = 5;
 
   constructor(private messageService: MessageService) {}
 
   ngOnInit(): void {
-    this.loadMessages();
+    this.loadMessages(this.container);
   }
 
-  loadMessages() {
+  loadMessages(container: string) {
+    this.container = container;
     this.messageService
       .getMessages(this.pageNumber, this.pageSize, this.container)
       .subscribe({
@@ -35,7 +36,7 @@ export class MessagesComponent implements OnInit {
   onPageChanged(pageNumber: number) {
     if (this.pageNumber !== pageNumber) {
       this.pageNumber = pageNumber;
-      this.loadMessages();
+      this.loadMessages(this.container);
     }
   }
 }
