@@ -17,3 +17,8 @@
 .rounded-circle {
   max-height: 50px;
 }
+
+input.ng-valid {
+  box-shadow: none;
+  border: 1px solid #ced4da;
+}
