@@ -2,6 +2,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Component, Input } from '@angular/core';
 import { Member } from 'src/app/models/member';
 import { MembersService } from 'src/app/services/members.service';
+import { MemberDetailTab } from 'src/app/models/member-detail-tab.enum';
 
 @Component({
   selector: 'app-member-card',
@@ -10,6 +11,7 @@ import { MembersService } from 'src/app/services/members.service';
 })
 export class MemberCardComponent {
   @Input() member: Member | undefined;
+  readonly memberDetailTab = MemberDetailTab;
 
   constructor(
     private membersService: MembersService,

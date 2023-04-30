@@ -1,12 +1,20 @@
 import { MembersService } from './../../services/members.service';
 import { Member } from 'src/app/models/member';
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   NgxGalleryAnimation,
   NgxGalleryImage,
   NgxGalleryOptions,
 } from '@kolkov/ngx-gallery';
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
+import { MemberDetailTab } from 'src/app/models/member-detail-tab.enum';
 
 @Component({
   selector: 'app-member-detail',
@@ -14,7 +22,17 @@ import {
   styleUrls: ['./member-detail.component.css'],
 })
 export class MemberDetailComponent implements OnInit {
+  private ngbNav?: NgbNav;
+  @ViewChild('nav') set setNgbNav(nav: NgbNav | undefined) {
+    if (!nav) return;
+    this.ngbNav = nav;
+    const tab = this.route.snapshot.queryParamMap.get('tab');
+    if (!tab) return;
+    this.ngbNav.select(+tab);
+  }
+
   member: Member | undefined;
+  readonly memberDetailTab = MemberDetailTab;
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
 
@@ -36,6 +54,12 @@ export class MemberDetailComponent implements OnInit {
         preview: false,
       },
     ];
+  }
+
+  // TabIds: 1-About, 2-Interests, 3-Photos, 4-Messages
+  selectTabById(id: MemberDetailTab) {
+    if (!this.ngbNav || !id) return;
+    this.ngbNav.select(id);
   }
 
   getImages() {
