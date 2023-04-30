@@ -47,6 +47,7 @@
     </thead>
     <tbody class="align-middle">
       <tr
+        [hidden]="isLoading"
         *ngFor="let message of messages"
         routerLink="{{
           container === 'Outbox'
@@ -83,7 +84,7 @@
   </table>
 </div>
 
-<div class="d-flex justify-content-center" *ngIf="pagination">
+<div class="d-flex justify-content-center" *ngIf="!isLoading && pagination">
   <ngb-pagination
     [collectionSize]="pagination.totalItems"
     [pageSize]="pagination.itemsPerPage"

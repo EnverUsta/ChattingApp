@@ -15,6 +15,7 @@ export class MessagesComponent implements OnInit {
   container = 'Unread';
   pageNumber = 1;
   pageSize = 5;
+  isLoading = false;
 
   readonly memberDetailTab = MemberDetailTab;
 
@@ -25,6 +26,7 @@ export class MessagesComponent implements OnInit {
   }
 
   loadMessages(container: string) {
+    this.isLoading = true;
     this.container = container;
     this.messageService
       .getMessages(this.pageNumber, this.pageSize, this.container)
@@ -32,6 +34,7 @@ export class MessagesComponent implements OnInit {
         next: (response: PaginatedResult<Message[]>) => {
           this.messages = response.result;
           this.pagination = response.pagination;
+          this.isLoading = false;
         },
       });
   }
