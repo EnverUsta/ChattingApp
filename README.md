@@ -147,3 +147,14 @@ Implement the Messaging functionality and gain an understanding of the following
 1. More many to many relationships
 2. Using query params in Angular
 3. Using Route resolvers in Angular
+
+## Section 16
+
+Refactor our code to use ASP.NET Identity and gain an understanding of the following:
+
+1. Using .Net Identity
+2. Role Management
+3. Policy Based authorisation
+4. UserManager<T>
+5. SignInManager<T>
+6. RoleManager<T>
