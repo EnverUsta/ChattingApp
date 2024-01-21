@@ -1,5 +1,55 @@
 # ChattingApp
 
+## Installation:
+
+#### 📌 BE (.NET)
+
+1. Since the application uses cloudinary platform for the images, you should create your own account on cloudinary.
+Please obtain these 3 values: ![image](https://github.com/EnverUsta/ChattingApp/assets/39167353/861148bb-c9a5-406d-9477-5088a1539ffa)
+
+2. Now you should add those values into your application. Please create appsettings.json in API folder. It should look like this:
+
+```
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "CloudinarySettings": {
+    "CloudName": "xxx",
+    "ApiKey": "xxx",
+    "ApiSecret": "xxx"
+  }
+}
+```
+
+3. dotnet restore
+4. dotnet run
+
+Now you're good to go 😎
+
+
+
+#### 📌 FE (Angular)
+
+1. npm install
+
+2. add ssl certificates
+![image](https://github.com/EnverUsta/ChattingApp/assets/39167353/664bba48-a0e8-41be-8eab-5ea8caa26115)
+
+Use this repo for downloading: https://github.com/FiloSottile/mkcert?tab=readme-ov-file
+
+Run these 2 commands:
+- mkcert --install
+- mkcert localhost
+
+![image](https://github.com/EnverUsta/ChattingApp/assets/39167353/3437cbce-6833-46a8-8c4b-7aa7257defc3)
+
+
+
 ## Section 2
 
 Implement the basic API functionality and have an introductory understanding of:
